@@ -47,6 +47,7 @@
 		2D7DCEC31D093F84006A97F3 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7DCEA21D093F84006A97F3 /* SideBar.swift */; settings = {ASSET_TAGS = (); }; };
 		2D7DCEC41D093F84006A97F3 /* SideBarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7DCEA31D093F84006A97F3 /* SideBarTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		2D7DCEC51D093F84006A97F3 /* SwiftCoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7DCEA41D093F84006A97F3 /* SwiftCoreDataHelper.swift */; settings = {ASSET_TAGS = (); }; };
+		2D7DCEC71D094411006A97F3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7DCEC61D094411006A97F3 /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +135,7 @@
 		2D7DCEA21D093F84006A97F3 /* SideBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
 		2D7DCEA31D093F84006A97F3 /* SideBarTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarTableViewController.swift; sourceTree = "<group>"; };
 		2D7DCEA41D093F84006A97F3 /* SwiftCoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftCoreDataHelper.swift; sourceTree = "<group>"; };
+		2D7DCEC61D094411006A97F3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D7DCEC71D094411006A97F3 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +160,7 @@
 		2D7DCE2C1D0916DC006A97F3 = {
 			isa = PBXGroup;
 			children = (
+				2D7DCEC61D094411006A97F3 /* CoreData.framework */,
 				2D7DCE371D0916DC006A97F3 /* RssFeedy */,
 				2D7DCE4F1D0916DC006A97F3 /* RssFeedyTests */,
 				2D7DCE361D0916DC006A97F3 /* Products */,
