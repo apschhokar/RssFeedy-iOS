@@ -4,3 +4,4 @@
 
 #import "MWFeedParser.h"
 #import "KINWebBrowserViewController.h"
+#import "Feed.h"

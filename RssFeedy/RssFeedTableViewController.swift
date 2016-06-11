@@ -8,15 +8,94 @@
 
 import UIKit
 
-class RssFeedTableViewController: UITableViewController {
+class RssFeedTableViewController: UITableViewController, MWFeedParserDelegate , SideBarDelegate {
+    
+    var feeds = [MWFeedItem]()
+    var sidebar = SideBar()
+    
+    func request(){
+        let myURL = NSURL(string :"http://rss.nytimes.com/services/xml/rss/nyt/Sports.xml")
+        let myFeedParser = MWFeedParser(feedURL: myURL!)
+        myFeedParser.delegate = self
+        myFeedParser.parse()
+    
+    }
 
+    
+    /*************************************************************************************/
+    // Feed parse delegates - callbacks
+    /*************************************************************************************/
+
+    
+    func feedParserDidStart(parser: MWFeedParser!) {
+        print("parse started")
+        feeds = [MWFeedItem]()
+    }
+    
+    func feedParserDidFinish(parser: MWFeedParser!) {
+        print("parse finifhsedh")
+        self.tableView.reloadData()
+    }
+    
+    
+    func feedParser(parser: MWFeedParser!, didParseFeedInfo info: MWFeedInfo!) {
+        print(info)
+        self.title = info.title
+        
+    }
+    
+    func feedParser(parser: MWFeedParser!, didParseFeedItem item: MWFeedItem!) {
+        if item == nil{
+           print("whatttt" + item.title)
+        }
+        
+        
+        if item.title != nil {
+          print("i was finally parsed %@" , item.title)
+          feeds.append(item)
+        }
+    }
+    
+    /*************************************************************************************/
+    /*************************************************************************************/
+
+    
+    /*************************************************************************************/
+    // Side Bar delegates - callbacks
+    /*************************************************************************************/
+
+    
+    func sideBarDidSelectMenuButtonAtIndex(index: Int) {
+        if index == 0 {
+           //add new feed
+            let alertView = UIAlertController(title: "Add New Feed", message: "Enter Name and URL!", preferredStyle: UIAlertControllerStyle.Alert);
+            alertView.addTextFieldWithConfigurationHandler({ (textField:UITextField!) -> Void in
+                textField.placeholder = "Feed name"
+            })
+            
+            alertView.addTextFieldWithConfigurationHandler({ (textField:UITextField!) -> Void in
+                textField.placeholder = "Feed URL"
+            })
+
+            
+        }
+    }
+    
+    
+    /*************************************************************************************/
+    /*************************************************************************************/
+    
+
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        sidebar = SideBar(sourceView: (self.navigationController?.view)!, menuItems: ["Add Feed"])
+        sidebar.delegate = self
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
@@ -24,28 +103,64 @@ class RssFeedTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        request()
+    }
+    
+    /*************************************************************************************/
+    // Table View Delegates
+    /*************************************************************************************/
+    
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return feeds.count
     }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        print("height is called")
+        return 100.00
+    }
+    
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
 
         // Configure the cell...
-
+        let item = feeds[indexPath.row] as MWFeedItem
+         print("i am called")
+        cell.textLabel?.text = item.title
+    
         return cell
     }
-    */
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let val = feeds[indexPath.row] as MWFeedItem
+        
+        let webbrowser = KINWebBrowserViewController()
+        let url = NSURL(string: val.link)
+        
+        webbrowser.loadURL(url)
+        
+        self.navigationController?.pushViewController(webbrowser, animated: true)
+        
+    }
+    
+    
+    
+    /*************************************************************************************/
+    /*************************************************************************************/
+
 
     /*
     // Override to support conditional editing of the table view.

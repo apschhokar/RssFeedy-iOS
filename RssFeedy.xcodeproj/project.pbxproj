@@ -48,6 +48,9 @@
 		2D7DCEC51D093F84006A97F3 /* SwiftCoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7DCEA41D093F84006A97F3 /* SwiftCoreDataHelper.swift */; settings = {ASSET_TAGS = (); }; };
 		2D7DCEC71D094411006A97F3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7DCEC61D094411006A97F3 /* CoreData.framework */; };
 		2D7DCEC91D09475E006A97F3 /* RssFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7DCEC81D09475E006A97F3 /* RssFeedTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		2DB02FFF1D0C85E700C17BD4 /* FeedyModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2DB02FFD1D0C85E700C17BD4 /* FeedyModel.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
+		2DB030041D0C872B00C17BD4 /* Feed+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB030011D0C872A00C17BD4 /* Feed+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
+		2DB030051D0C872B00C17BD4 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB030031D0C872B00C17BD4 /* Feed.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +139,11 @@
 		2D7DCEA41D093F84006A97F3 /* SwiftCoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftCoreDataHelper.swift; sourceTree = "<group>"; };
 		2D7DCEC61D094411006A97F3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		2D7DCEC81D09475E006A97F3 /* RssFeedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RssFeedTableViewController.swift; sourceTree = "<group>"; };
+		2DB02FFE1D0C85E700C17BD4 /* FeedyModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FeedyModel.xcdatamodel; sourceTree = "<group>"; };
+		2DB030001D0C872A00C17BD4 /* Feed+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Feed+CoreDataProperties.h"; path = "../Feed+CoreDataProperties.h"; sourceTree = "<group>"; };
+		2DB030011D0C872A00C17BD4 /* Feed+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Feed+CoreDataProperties.m"; path = "../Feed+CoreDataProperties.m"; sourceTree = "<group>"; };
+		2DB030021D0C872B00C17BD4 /* Feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Feed.h; path = ../Feed.h; sourceTree = "<group>"; };
+		2DB030031D0C872B00C17BD4 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Feed.m; path = ../Feed.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,7 +188,12 @@
 		2D7DCE371D0916DC006A97F3 /* RssFeedy */ = {
 			isa = PBXGroup;
 			children = (
+				2DB030001D0C872A00C17BD4 /* Feed+CoreDataProperties.h */,
+				2DB030011D0C872A00C17BD4 /* Feed+CoreDataProperties.m */,
+				2DB030021D0C872B00C17BD4 /* Feed.h */,
+				2DB030031D0C872B00C17BD4 /* Feed.m */,
 				2D7DCE381D0916DC006A97F3 /* AppDelegate.swift */,
+				2DB02FFD1D0C85E700C17BD4 /* FeedyModel.xcdatamodeld */,
 				2D7DCEC81D09475E006A97F3 /* RssFeedTableViewController.swift */,
 				2D7DCE3C1D0916DC006A97F3 /* Main.storyboard */,
 				2D7DCE421D0916DC006A97F3 /* Assets.xcassets */,
@@ -423,6 +436,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DB030051D0C872B00C17BD4 /* Feed.m in Sources */,
 				2D7DCE411D0916DC006A97F3 /* RssFeedy.xcdatamodeld in Sources */,
 				2D7DCEB41D093F84006A97F3 /* TUSafariActivity.m in Sources */,
 				2D7DCEC31D093F84006A97F3 /* SideBar.swift in Sources */,
@@ -434,10 +448,12 @@
 				2D7DCE391D0916DC006A97F3 /* AppDelegate.swift in Sources */,
 				2D7DCEC01D093F84006A97F3 /* NSDate+InternetDateTime.m in Sources */,
 				2D7DCEBC1D093F84006A97F3 /* KINWebBrowserViewController.m in Sources */,
+				2DB030041D0C872B00C17BD4 /* Feed+CoreDataProperties.m in Sources */,
 				2D7DCEA51D093F84006A97F3 /* ARChromeActivity.m in Sources */,
 				2D7DCEC91D09475E006A97F3 /* RssFeedTableViewController.swift in Sources */,
 				2D7DCEC11D093F84006A97F3 /* NSString+HTML.m in Sources */,
 				2D7DCEB51D093F84006A97F3 /* GTMNSString+HTML.m in Sources */,
+				2DB02FFF1D0C85E700C17BD4 /* FeedyModel.xcdatamodeld in Sources */,
 				2D7DCEC21D093F84006A97F3 /* NSString+XMLEntities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -593,6 +609,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = RssFeedy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Ajay.RssFeedy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -607,6 +624,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = RssFeedy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Ajay.RssFeedy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -657,6 +675,7 @@
 				2D7DCE571D0916DC006A97F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2D7DCE581D0916DC006A97F3 /* Build configuration list for PBXNativeTarget "RssFeedyTests" */ = {
 			isa = XCConfigurationList;
@@ -665,6 +684,7 @@
 				2D7DCE5A1D0916DC006A97F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
@@ -676,6 +696,16 @@
 			);
 			currentVersion = 2D7DCE401D0916DC006A97F3 /* RssFeedy.xcdatamodel */;
 			path = RssFeedy.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		2DB02FFD1D0C85E700C17BD4 /* FeedyModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2DB02FFE1D0C85E700C17BD4 /* FeedyModel.xcdatamodel */,
+			);
+			currentVersion = 2DB02FFE1D0C85E700C17BD4 /* FeedyModel.xcdatamodel */;
+			path = FeedyModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

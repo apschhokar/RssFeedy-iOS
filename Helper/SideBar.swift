@@ -25,7 +25,7 @@ class SideBar: NSObject, SideBarTableViewControllerDelegate {
     let sideBarContainerView:UIView = UIView()
     let sideBarTableViewController:SideBarTableViewController = SideBarTableViewController()
     var animator:UIDynamicAnimator!
-    let origionView:UIView!
+    var origionView:UIView!
     var delegate:SideBarDelegate?
     var isSideBarOpen:Bool = false
     
@@ -104,7 +104,7 @@ class SideBar: NSObject, SideBarTableViewControllerDelegate {
         
         let gravityX:CGFloat = (shouldOpen) ? 0.5 : -0.5
         let magnitude:CGFloat = (shouldOpen) ? 20 : -20
-        var boundaryX:CGFloat = (shouldOpen) ? barWidth : -barWidth - 1.0
+        let boundaryX:CGFloat = (shouldOpen) ? barWidth : -barWidth - 1.0
         
         let gravityBehavior:UIGravityBehavior = UIGravityBehavior(items: [sideBarContainerView])
         gravityBehavior.gravityDirection = CGVectorMake(gravityX, 0)
