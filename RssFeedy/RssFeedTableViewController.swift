@@ -12,14 +12,61 @@ class RssFeedTableViewController: UITableViewController, MWFeedParserDelegate , 
     
     var feeds = [MWFeedItem]()
     var sidebar = SideBar()
+    var savedFeeds = [Feed]()
+    var feedNames = [String]()
+
     
-    func request(){
-        let myURL = NSURL(string :"http://rss.nytimes.com/services/xml/rss/nyt/Sports.xml")
-        let myFeedParser = MWFeedParser(feedURL: myURL!)
-        myFeedParser.delegate = self
-        myFeedParser.parse()
+    func request(urlString:String?){
+        if urlString == nil{
+            
+            let url = NSURL(string: "http://feeds.nytimes.com/nyt/rss/Technology")
+            let feedParser = MWFeedParser(feedURL: url)
+            feedParser.delegate = self
+            feedParser.parse()
+        }else{
+            
+            let url = NSURL(string: urlString!)
+            let feedParser = MWFeedParser(feedURL: url)
+            feedParser.delegate = self
+            feedParser.parse()
+        }
+
     
     }
+
+    
+    func loadSavedFeeds(){
+        savedFeeds = [Feed]()
+        feedNames = [String]()
+        
+        feedNames.append("Add Feed");
+        
+        let moc = SwiftCoreDataHelper.managedObjectContext()
+        
+        let results = NSFetchRequest(entityName: NSStringFromClass(Feed))
+        
+        do {
+            let fetchedFeeds = try moc.executeFetchRequest(results) as! [Feed]
+            
+            if fetchedFeeds.count>0 {
+                for feed in fetchedFeeds{
+                    let f = feed as Feed
+                    savedFeeds.append(f)
+                    feedNames.append(f.name!)
+                }
+                
+            }
+            
+        } catch {
+            fatalError("Failed to fetch employees: \(error)")
+        }
+        
+        sidebar = SideBar(sourceView: (self.navigationController?.view)!, menuItems: feedNames)
+        sidebar.delegate = self
+        
+        
+    }
+    
 
     
     /*************************************************************************************/
@@ -66,7 +113,10 @@ class RssFeedTableViewController: UITableViewController, MWFeedParserDelegate , 
 
     
     func sideBarDidSelectMenuButtonAtIndex(index: Int) {
+        
         if index == 0 {
+            print("sidebar was called");
+
            //add new feed
             let alertView = UIAlertController(title: "Add New Feed", message: "Enter Name and URL!", preferredStyle: UIAlertControllerStyle.Alert);
             alertView.addTextFieldWithConfigurationHandler({ (textField:UITextField!) -> Void in
@@ -76,8 +126,54 @@ class RssFeedTableViewController: UITableViewController, MWFeedParserDelegate , 
             alertView.addTextFieldWithConfigurationHandler({ (textField:UITextField!) -> Void in
                 textField.placeholder = "Feed URL"
             })
+        
 
+            alertView.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+            alertView.addAction(UIAlertAction(title: "Save", style: UIAlertActionStyle.Default, handler: { (alertAction:UIAlertAction!) -> Void in
+                let textFields = alertView.textFields
+                
+                let feedNameTextField = textFields?.first
+                let feedURLTextField = textFields?.last
+                
+                if feedNameTextField!.text != "" && feedURLTextField!.text != "" {
+                    let moc = SwiftCoreDataHelper.managedObjectContext()
+                    
+                    
+                    let feed = NSEntityDescription.insertNewObjectForEntityForName(NSStringFromClass(Feed), inManagedObjectContext: moc) as! Feed
+
+                    
+                    feed.name = feedNameTextField!.text
+                    feed.url = feedURLTextField!.text
+                    
+                    
+                    do {
+                        try moc.save()
+                    } catch {
+                        fatalError("Failure to save context: \(error)")
+                    }
+                    
+                    self.loadSavedFeeds()
+                }
+            }))
+
+            self.presentViewController(alertView, animated: true, completion: nil)
+
+        }
+        else {
             
+            let moc = SwiftCoreDataHelper.managedObjectContext()
+            do{
+                let selectedFeed = try moc.existingObjectWithID(savedFeeds[index - 1].objectID) as! Feed
+                request(selectedFeed.url)
+            }
+            catch{
+                fatalError("Failure to save context: \(error)")
+
+            }
+            
+            
+            UINavigationBar.appearance().barTintColor = getRandomColor()
+           
         }
     }
     
@@ -93,9 +189,8 @@ class RssFeedTableViewController: UITableViewController, MWFeedParserDelegate , 
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-
-        sidebar = SideBar(sourceView: (self.navigationController?.view)!, menuItems: ["Add Feed"])
-        sidebar.delegate = self
+        loadSavedFeeds()
+        
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
@@ -106,7 +201,7 @@ class RssFeedTableViewController: UITableViewController, MWFeedParserDelegate , 
     
     
     override func viewWillAppear(animated: Bool) {
-        request()
+        request(nil);
     }
     
     /*************************************************************************************/
@@ -134,13 +229,20 @@ class RssFeedTableViewController: UITableViewController, MWFeedParserDelegate , 
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! FeedCellTableViewCell
 
         // Configure the cell...
         let item = feeds[indexPath.row] as MWFeedItem
-         print("i am called")
-        cell.textLabel?.text = item.title
-    
+        
+        //take the date as well
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = .MediumStyle
+        let dateString = dateFormatter.stringFromDate(item.date)
+        
+        print("date is" + dateString)
+        print("i am called")
+        cell.newLabel.text = item.title
+        cell.dateLabel.text = dateString
         return cell
     }
     
@@ -156,6 +258,19 @@ class RssFeedTableViewController: UITableViewController, MWFeedParserDelegate , 
         
     }
     
+    
+    
+    func getRandomColor() -> UIColor{
+        
+        var randomRed:CGFloat = CGFloat(drand48())
+        
+        var randomGreen:CGFloat = CGFloat(drand48())
+        
+        var randomBlue:CGFloat = CGFloat(drand48())
+        
+        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
+        
+    }
     
     
     /*************************************************************************************/
